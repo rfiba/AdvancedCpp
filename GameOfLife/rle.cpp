@@ -30,13 +30,14 @@ void decodeRLEdirectFromFile(string nameOfFile) {
 	
 	vector<string> lines;
 	string line;
-	
+	cell tmpCell;
+	int callingLine = 0;
 	while (file >> line)
 		lines.push_back(line);
 	cout << lines.size() << endl;
-	vector<vector<cell>> board(lines.size(), vector<cell>(1));
+	vector<vector<cell>> board(lines.size());//, vector<cell>(1));
 	int result = 0, j = 1;
-	bool state, boardCreated = false;
+	bool state, boardCreated = false, stateOfPreviousOne;;
 	stack<char> numberStack;
 	int numberOfLine = 0;
 	for (auto& tmp : lines) {
@@ -44,42 +45,70 @@ void decodeRLEdirectFromFile(string nameOfFile) {
 		while (tmp.size()) {
 			if (tmp.back() == 'T') {
 				j = 1;
-				state = true;
+				
 				tmp.pop_back();
-				if (!result)
+				if (!result) {
+					//numberOfLine++;
 					continue;
+				}
 				else {
-					cout << result << "---";
-					for (int i = 0; i < result; i++)
-						board[numberOfLine].push_back(new cell(state));
+					cout << "Wpisuje do linii " << callingLine << " +tyle " << result << " o wartoœci " << stateOfPreviousOne << " ";
+					for (int i = 0; i < result; i++) {
+						tmpCell = new cell();
+						state == true ? tmpCell.birth() : tmpCell.kill();
+						cout << tmpCell.returnState() << " ";
+						auto it = board[callingLine].begin();
+						board[callingLine].insert(it,tmpCell);
+					}
+					cout << endl;
 					result = 0;
 				}
+				state = true;
 			}
 			else if (tmp.back() == 'F') {
 				j = 1;
-				state = false;
+				
 				tmp.pop_back();
-				if (!result)
+				if (!result) {
+					//numberOfLine++;
 					continue;
+				}
 				else {
-					cout << result << "---";
-					for (int i = 0; i < result; i++)
-						board[numberOfLine].push_back(new cell(state));
+					cout << "wpisuje do linii " << callingLine << " tyle " << result << " o wartoœci " << stateOfPreviousOne << " ";
+					for (int i = 0; i < result; i++) {
+						tmpCell = new cell();
+						state == true ? tmpCell.birth() : tmpCell.kill();
+						cout << tmpCell.returnState() << " " ;
+						auto it = board[callingLine].begin();
+						board[callingLine].insert(it, tmpCell);
+					}
+					cout << endl;
 					result = 0;
 				}
+				state = false;
 			}
 			else {
 				//cout << tmp.back() << " ";
 				result += ((int)tmp.back() - 48)*j;
 				j *= 10;
 				tmp.pop_back();
-				
+				callingLine = numberOfLine;
+				stateOfPreviousOne = state;
 			}
 		}
 		numberOfLine++;
 		cout << endl << endl;
 	}
 	cout << numberOfLine << endl;
+	cout << "wpisuje do linii " << callingLine << " tyle " << result << " o wartoœci " << stateOfPreviousOne << " ";
+	for (int i = 0; i < result; i++) {
+		tmpCell = new cell();
+		tmpCell.kill();
+		cout << tmpCell.returnState() << " ";
+		auto it = board[callingLine].begin();
+		board[callingLine].insert(it, tmpCell);
+	}
+	cout << endl;
 	file.close();
 	for (auto& rows : board) {
 		for (auto& element : rows)

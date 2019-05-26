@@ -7,7 +7,7 @@ private:
 	bool state;
 public:
 	cell();
-	cell(bool stateToAdd) : state(stateToAdd) {};
+	cell(bool);
 	void kill();
 	void birth();
 	bool returnState();
