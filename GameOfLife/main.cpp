@@ -56,22 +56,24 @@ void prepare(vector<vector<cell>> &board1, vector<vector<cell>> &board2) {
 int main() {
 	vector<vector<cell>> board(SIZE, vector<cell>(SIZE));
 	vector<vector<cell>> board2(SIZE, vector<cell>(SIZE));
-	//board[0][0].birth();
-	//board[0][1].birth();
-	//board[1][1].birth();
-	//board[1][0].birth();
+	board[0][0].birth();
+	board[0][1].birth();
+	board[1][1].birth();
+	board[1][0].birth();
 	board[3][7].birth();
 	board[4][7].birth();
 	board[5][7].birth();
 	board[5][6].birth();
 	board[4][5].birth();
 
-
+	//encodeRLE(board);
 	decodeRLEdirectFromFile("board.rle");
+	int i = 0;
+	cin >> i;
 	return 0;
 
 
-	int i = 0;
+	
 	for (int i = 0; i < 10; i++) {
 		(i % 2) ? prepare(board2, board) : prepare(board, board2);
 		cout << endl << i << endl;

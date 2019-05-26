@@ -25,16 +25,20 @@ unique_ptr<string[]> encodeRLE(vector<vector<cell>> &toEncode) {
 void decodeRLEdirectFromFile(string nameOfFile) {
 	ifstream file(nameOfFile);
 	if (file.bad())
-		return;
+		throw new exception();
 
+	
 	vector<string> lines;
 	string line;
-	while (getline(file, line))
+	
+	while (file >> line)
 		lines.push_back(line);
-
+	cout << lines.size() << endl;
+	vector<vector<cell>> board(lines.size(), vector<cell>(1));
 	int result = 0, j = 1;
-	bool state;
+	bool state, boardCreated = false;
 	stack<char> numberStack;
+	int numberOfLine = 0;
 	for (auto& tmp : lines) {
 		cout << tmp << " ";
 		while (tmp.size()) {
@@ -46,6 +50,8 @@ void decodeRLEdirectFromFile(string nameOfFile) {
 					continue;
 				else {
 					cout << result << "---";
+					for (int i = 0; i < result; i++)
+						board[numberOfLine].push_back(new cell(state));
 					result = 0;
 				}
 			}
@@ -57,6 +63,8 @@ void decodeRLEdirectFromFile(string nameOfFile) {
 					continue;
 				else {
 					cout << result << "---";
+					for (int i = 0; i < result; i++)
+						board[numberOfLine].push_back(new cell(state));
 					result = 0;
 				}
 			}
@@ -65,10 +73,17 @@ void decodeRLEdirectFromFile(string nameOfFile) {
 				result += ((int)tmp.back() - 48)*j;
 				j *= 10;
 				tmp.pop_back();
+				
 			}
 		}
+		numberOfLine++;
 		cout << endl << endl;
 	}
+	cout << numberOfLine << endl;
 	file.close();
-
+	for (auto& rows : board) {
+		for (auto& element : rows)
+			cout << element.returnState() << " ";
+		cout << endl;
+	}
 }
