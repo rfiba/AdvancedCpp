@@ -21,7 +21,8 @@ namespace GameOfLife {
 			timer = gcnew Timer();
 			timer->Tick += gcnew System::EventHandler(this, &MainWindow::onTimedEvent);
 			timer->Interval = 700;
-			timer->Start();
+			//timer->Start();
+			OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
 		}
 
 	protected:
@@ -43,7 +44,9 @@ namespace GameOfLife {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
-		static Timer^ timer;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
+	private: System::Windows::Forms::Button^  button1;
+			 static Timer^ timer;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -53,6 +56,8 @@ namespace GameOfLife {
 		void InitializeComponent(void)
 		{
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -67,11 +72,27 @@ namespace GameOfLife {
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainWindow::pictureBox1_Click);
 			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
+			this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &MainWindow::openFileDialog1_FileOk);
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(35, 13);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 1;
+			this->button1->Text = L"RLE file";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MainWindow::button1_Click);
+			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(945, 530);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MainWindow";
 			this->Text = L"MainWindow";
@@ -89,6 +110,18 @@ namespace GameOfLife {
 
 	private: System::Void onTimedEvent(System::Object^  sender, System::EventArgs^  e) {
 		MessageBox::Show("PIF");
+	}
+	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
+	}
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		openFileDialog1->FileName = "board";
+		openFileDialog1->DefaultExt = ".rle";
+		openFileDialog1->ShowDialog();
+
+		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+		{
+			MessageBox::Show("OK");
+		}
 	}
 	};
 }
