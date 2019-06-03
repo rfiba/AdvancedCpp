@@ -1,0 +1,5 @@
+﻿  MainWindow.cpp
+MainWindow.cpp(5): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+  board.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Debug\GameOfLife.exe
+  GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Debug\GameOfLife.pdb (Partial PDB)

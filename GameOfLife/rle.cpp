@@ -22,7 +22,7 @@ unique_ptr<string[]> encodeRLE(vector<vector<cell>> &toEncode) {
 	return move(result);
 }
 
-void decodeRLEdirectFromFile(string nameOfFile) {
+vector<vector<cell>> decodeRLEdirectFromFile(string nameOfFile) {
 	ifstream file(nameOfFile);
 	if (file.bad())
 		throw new exception();
@@ -115,4 +115,6 @@ void decodeRLEdirectFromFile(string nameOfFile) {
 			cout << element.returnState() << " ";
 		cout << endl;
 	}
+
+	return board;
 }

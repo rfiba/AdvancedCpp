@@ -14,6 +14,6 @@
 using namespace std;
 
 unique_ptr<string[]> encodeRLE(vector<vector<cell>> &toEncode);
-void decodeRLEdirectFromFile(string nameOfFile);
+vector<vector<cell>> decodeRLEdirectFromFile(string nameOfFile);
 
 #endif //RLE_H
