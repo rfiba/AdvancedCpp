@@ -25,7 +25,11 @@ namespace GameOfLife {
 			timer->Tick += gcnew System::EventHandler(this, &MainWindow::onTimedEvent);
 			timer->Interval = 700;
 			//timer->Start();
-			OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
+			this->brush = gcnew SolidBrush(System::Drawing::Color::Blue);
+			this->image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+			this->graphics = Graphics::FromImage(image);
+			pictureBox1->Image = image;
+
 		}
 
 	protected:
@@ -46,6 +50,9 @@ namespace GameOfLife {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
+		SolidBrush^ brush;
+		Graphics^ graphics;
+		Bitmap^ image;
 		System::ComponentModel::Container ^components;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::Button^  button1;
@@ -114,7 +121,18 @@ namespace GameOfLife {
 	}
 
 	private: System::Void onTimedEvent(System::Object^  sender, System::EventArgs^  e) {
-		MessageBox::Show("PIF");
+		mainBoard.nextStep();
+		for (int i = 0; i < mainBoard.getSizeM(); i++) {
+			for (int j = 0; j < mainBoard.getSizeN(); j++) {
+				bool tmp = mainBoard.getState(i, j);
+
+				if (tmp) {
+
+					graphics->FillRectangle(brush, j * 10 + 1, i * 10 + 1, 10 - 1, 10 - 1);
+				}
+			}
+		}
+		pictureBox1->Image = image;
 	}
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	}
@@ -128,7 +146,7 @@ namespace GameOfLife {
 			
 		}*/
 		mainBoard.createBoardFromFile("board.rle");
-
+		timer->Start();
 		MessageBox::Show(mainBoard.getSizeN().ToString());
 	}
 	};

@@ -12,6 +12,7 @@ private:
 	vector<vector<cell>> mainBoard;
 	vector<vector<cell>> copyOfMainBoard;
 	int mod(int x, int max);
+	vector<vector<cell>> copy(vector<vector<cell>> p1);
 public:
 	board() {};
 	board(int sizeMToAdd, int sizeNToAdd);

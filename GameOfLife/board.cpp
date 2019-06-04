@@ -1,6 +1,17 @@
 #include "board.h"
 
 
+vector<vector<cell>> board::copy(vector<vector<cell>> p1) {
+	vector<vector<cell>> copyOne(sizeM, vector<cell>(sizeN));
+	for (int i = 0; i < copyOfMainBoard.size(); i++) {
+		for (int j = 0; j < copyOfMainBoard[i].size(); j++)
+		{
+			p1[i][j].returnState() ? copyOne[i][j].birth() : copyOne[i][j].kill();
+		}
+	}
+	return copyOfMainBoard;
+}
+
 
 int board::mod(int x, int max)
 {
@@ -49,7 +60,7 @@ void board::setSizeN(int value)
 void board::nextStep()
 {
 	copyOfMainBoard = mainBoard;
-
+	
 	for (int i = 0; i < copyOfMainBoard.size(); i++) {
 		for (int j = 0; j < copyOfMainBoard[i].size(); j++) {
 
