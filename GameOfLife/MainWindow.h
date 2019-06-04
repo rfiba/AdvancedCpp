@@ -1,4 +1,6 @@
 #pragma once
+#include "board.h"
+#include <string> 
 
 namespace GameOfLife {
 
@@ -12,6 +14,7 @@ namespace GameOfLife {
 	/// <summary>
 	/// Summary for MainWindow
 	/// </summary>
+	board mainBoard;
 	public ref class MainWindow : public System::Windows::Forms::Form
 	{
 	public:
@@ -47,6 +50,8 @@ namespace GameOfLife {
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::Button^  button1;
 			 static Timer^ timer;
+			 
+			 
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -114,14 +119,17 @@ namespace GameOfLife {
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		openFileDialog1->FileName = "board";
+		/*openFileDialog1->FileName = "board";
 		openFileDialog1->DefaultExt = ".rle";
 		openFileDialog1->ShowDialog();
 
 		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 		{
-			MessageBox::Show("OK");
-		}
+			
+		}*/
+		mainBoard.createBoardFromFile("board.rle");
+
+		MessageBox::Show(mainBoard.getSizeN().ToString());
 	}
 	};
 }

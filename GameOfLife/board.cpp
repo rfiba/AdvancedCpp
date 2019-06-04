@@ -12,8 +12,10 @@ int board::mod(int x, int max)
 		return (x - max);
 }
 
-board::board()
+board::board(int sizeMToAdd, int sizeNToAdd)
 {
+	sizeM = sizeMToAdd;
+	sizeN = sizeNToAdd;
 	vector<vector<cell>> p1(sizeM, vector<cell>(sizeN));
 	mainBoard = p1;
 	
@@ -78,4 +80,16 @@ void board::nextStep()
 			mainBoard[i][j] = copyOfMainBoard[i][j];
 		}
 	}
+}
+
+void board::setState(int i, int j, bool stateToSet)
+{
+	stateToSet ? mainBoard[i][j].birth() : mainBoard[i][j].kill();
+}
+
+void board::createBoardFromFile(string fileName)
+{
+	mainBoard = decodeRLEdirectFromFile(fileName);
+	sizeM = mainBoard.size();
+	sizeN = mainBoard[0].size();
 }

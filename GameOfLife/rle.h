@@ -10,6 +10,7 @@
 #include <memory>
 #include <fstream>
 #include <stack>
+#include "board.h"
 
 using namespace std;
 
