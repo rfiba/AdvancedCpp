@@ -24,5 +24,7 @@ public:
 	void nextStep();
 	void setState(int i, int j, bool stateToSet);
 	void createBoardFromFile(string fileName);
+	void createFileFromBoard(string fileName);
+	shared_ptr<vector<vector<cell>>> returnBoard();
 };
 

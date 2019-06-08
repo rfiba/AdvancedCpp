@@ -104,3 +104,21 @@ void board::createBoardFromFile(string fileName)
 	sizeM = mainBoard.size();
 	sizeN = mainBoard[0].size();
 }
+
+void board::createFileFromBoard(string fileName)
+{
+	unique_ptr<string[]> lines = encodeRLE(mainBoard);
+	ofstream file("board_result.rle");
+	if (file.bad())
+		throw new exception();
+	for (int i = 0; i < sizeM; i++) {
+		file << lines[i] << endl;
+	}
+	file.close();
+}
+
+
+shared_ptr<vector<vector<cell>>> board::returnBoard()
+{
+	return make_shared<vector<vector<cell>>>(mainBoard);
+}

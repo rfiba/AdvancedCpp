@@ -7,9 +7,9 @@ unique_ptr<string[]> encodeRLE(vector<vector<cell>> &toEncode) {
 	int m = toEncode[0].size();
 	unique_ptr<string[]> result(new string[n]);
 	for (int i = 0; i < n; i++) {
-		for (int j = 0, count = 1; j < m; j++) {
+		for (int j = 0, count = 1; j < m-1; j++) {
 			count = 1;
-			while (toEncode[i][j].returnState() == toEncode[i][j + 1].returnState()) {
+			while (j < m-1 && toEncode[i][j].returnState() == toEncode[i][j + 1].returnState()) {
 				count++;
 				j++;
 			}

@@ -133,6 +133,7 @@ namespace GameOfLife {
 			this->button4->TabIndex = 4;
 			this->button4->Text = L"Save to file";
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MainWindow::button4_Click);
 			// 
 			// MainWindow
 			// 
@@ -184,6 +185,10 @@ namespace GameOfLife {
 	}
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 	timer->Stop();
+}
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	mainBoard.createFileFromBoard("board_resul.rle");
 }
 };
 }
