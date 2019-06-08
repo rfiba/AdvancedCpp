@@ -56,6 +56,9 @@ namespace GameOfLife {
 		System::ComponentModel::Container ^components;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::Button^  button3;
+	private: System::Windows::Forms::Button^  button4;
 			 static Timer^ timer;
 			 
 			 
@@ -70,6 +73,9 @@ namespace GameOfLife {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -99,11 +105,43 @@ namespace GameOfLife {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MainWindow::button1_Click);
 			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(139, 13);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->TabIndex = 2;
+			this->button2->Text = L"start";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MainWindow::button2_Click);
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(238, 13);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->TabIndex = 3;
+			this->button3->Text = L"stop";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MainWindow::button3_Click);
+			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(336, 13);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(75, 23);
+			this->button4->TabIndex = 4;
+			this->button4->Text = L"Save to file";
+			this->button4->UseVisualStyleBackColor = true;
+			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(945, 530);
+			this->Controls->Add(this->button4);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MainWindow";
@@ -137,17 +175,15 @@ namespace GameOfLife {
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		/*openFileDialog1->FileName = "board";
-		openFileDialog1->DefaultExt = ".rle";
-		openFileDialog1->ShowDialog();
-
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-		{
-			
-		}*/
 		mainBoard.createBoardFromFile("board.rle");
-		timer->Start();
+		
 		MessageBox::Show(mainBoard.getSizeN().ToString());
 	}
-	};
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		timer->Start();
+	}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	timer->Stop();
+}
+};
 }

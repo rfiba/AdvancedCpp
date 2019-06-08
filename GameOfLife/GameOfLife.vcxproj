@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClCompile Include="board.cpp" />
     <ClCompile Include="cell.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="rle.cpp" />
   </ItemGroup>
