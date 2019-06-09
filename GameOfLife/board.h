@@ -22,7 +22,10 @@ public:
 	bool getState(int i, int j);
 	void setSizeM(int value);
 	void setSizeN(int value);
+	void setSizeMAndN(int valueM, int valueN);
 	void nextStep();
+	void birthBasedOnCordinates(int x, int y, int cellSize);
+	void killBasedOnCordinates(int x, int y, int cellSize);
 	void setState(int i, int j, bool stateToSet);
 	void createBoardFromFile(string fileName);
 	void createFileFromBoard(string fileName);

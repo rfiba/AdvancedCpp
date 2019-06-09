@@ -58,12 +58,19 @@ namespace GameOfLife {
 
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
+
+
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::Button^  button5;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown2;
 			 static Timer^ timer;
+	private: System::Windows::Forms::Button^  button6;
+			 bool manualMode = false;
 			 
 			 
 
@@ -82,7 +89,13 @@ namespace GameOfLife {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->button6 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pictureBox1
@@ -108,6 +121,7 @@ namespace GameOfLife {
 			// 
 			// button2
 			// 
+			this->button2->Enabled = false;
 			this->button2->Location = System::Drawing::Point(139, 13);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(75, 23);
@@ -118,6 +132,7 @@ namespace GameOfLife {
 			// 
 			// button3
 			// 
+			this->button3->Enabled = false;
 			this->button3->Location = System::Drawing::Point(238, 13);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 23);
@@ -128,6 +143,7 @@ namespace GameOfLife {
 			// 
 			// button4
 			// 
+			this->button4->Enabled = false;
 			this->button4->Location = System::Drawing::Point(336, 13);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(75, 23);
@@ -156,6 +172,7 @@ namespace GameOfLife {
 			// 
 			// listBox1
 			// 
+			this->listBox1->Enabled = false;
 			this->listBox1->FormattingEnabled = true;
 			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Gun", L"Glider", L"Copperhead" });
 			this->listBox1->Location = System::Drawing::Point(35, 43);
@@ -163,11 +180,51 @@ namespace GameOfLife {
 			this->listBox1->Size = System::Drawing::Size(93, 30);
 			this->listBox1->TabIndex = 7;
 			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(139, 43);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->TabIndex = 8;
+			this->button5->Text = L"manual";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MainWindow::button5_Click);
+			// 
+			// numericUpDown1
+			// 
+			this->numericUpDown1->Location = System::Drawing::Point(238, 45);
+			this->numericUpDown1->Name = L"numericUpDown1";
+			this->numericUpDown1->Size = System::Drawing::Size(120, 20);
+			this->numericUpDown1->TabIndex = 9;
+			this->numericUpDown1->Enabled = false;
+			// 
+			// numericUpDown2
+			// 
+			this->numericUpDown2->Location = System::Drawing::Point(364, 45);
+			this->numericUpDown2->Name = L"numericUpDown2";
+			this->numericUpDown2->Size = System::Drawing::Size(120, 20);
+			this->numericUpDown2->TabIndex = 10;
+			this->numericUpDown2->Enabled = false;
+			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(490, 42);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(75, 23);
+			this->button6->TabIndex = 11;
+			this->button6->Text = L"set";
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &MainWindow::button6_Click);
+			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(980, 578);
+			this->Controls->Add(this->button6);
+			this->Controls->Add(this->numericUpDown2);
+			this->Controls->Add(this->numericUpDown1);
+			this->Controls->Add(this->button5);
 			this->Controls->Add(this->listBox1);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -179,6 +236,8 @@ namespace GameOfLife {
 			this->Name = L"MainWindow";
 			this->Text = L"Game of life";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -186,8 +245,28 @@ namespace GameOfLife {
 #pragma endregion
 	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
 		MouseEventArgs^ me = (MouseEventArgs^)e;
-		if(me->Button == System::Windows::Forms::MouseButtons::Right){
-			MessageBox::Show("Praw;");
+		if (manualMode) {
+			if (me->Button == System::Windows::Forms::MouseButtons::Right) {
+				if (me->X >= mainBoard.getSizeN() * 10 || me->Y >= mainBoard.getSizeN() * 10)
+					return;
+				//MessageBox::Show("Praw");
+				mainBoard.killBasedOnCordinates((int)me->X, (int)me->Y, 10);
+			}
+			else if (me->Button == System::Windows::Forms::MouseButtons::Left) {
+				if (me->X >= mainBoard.getSizeN() * 10 || me->Y >= mainBoard.getSizeN() * 10)
+					return;
+				//MessageBox::Show("Lew");
+				mainBoard.birthBasedOnCordinates((int)me->X, (int)me->Y, 10);
+			}
+			graphics->Clear(System::Drawing::Color::White);
+			for (int i = 0; i < mainBoard.getSizeM(); i++) {
+				for (int j = 0; j < mainBoard.getSizeN(); j++) {
+					bool tmp = mainBoard.getState(i, j);
+					if (tmp)
+						graphics->FillRectangle(brush, j * 10 + 1, i * 10 + 1, 10 - 1, 10 - 1);
+				}
+			}
+			pictureBox1->Image = image;
 		}
 	}
 
@@ -210,7 +289,8 @@ namespace GameOfLife {
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+		this->listBox1->Enabled = true;
+		graphics->Clear(System::Drawing::Color::White);
 		if (this->listBox1->SelectedItem != nullptr) {
 			if (this->listBox1->SelectedItem->ToString() == "Gun")
 				mainBoard.createBoardFromFile("gun.rle");
@@ -219,8 +299,8 @@ namespace GameOfLife {
 			else if (this->listBox1->SelectedItem->ToString() == "Copperhead")
 				mainBoard.createBoardFromFile("copperhead.rle");
 		}
-		/*MessageBox::Show(mainBoard.getSizeM().ToString());
-		MessageBox::Show(mainBoard.getSizeN().ToString());*/
+		else
+			return;
 		for (int i = 0; i < mainBoard.getSizeM(); i++) {
 			for (int j = 0; j < mainBoard.getSizeN(); j++) {
 				bool tmp = mainBoard.getState(i, j);
@@ -229,26 +309,41 @@ namespace GameOfLife {
 			}
 		}
 		pictureBox1->Image = image;
+		this->button2->Enabled = true;
 		
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->button3->Enabled = true;
+		this->button2->Enabled = false;
+		this->button4->Enabled = false;
 		timer->Start();
 	}
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 	timer->Stop();
+	this->button3->Enabled = false;
+	this->button2->Enabled = true;
+	this->button4->Enabled = true;
 }
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+	mainBoard.createFileFromBoard("board_result.rle");
 	
-	mainBoard.createFileFromBoard("board_resul.rle");
 }
-/*rivate: void draw(Graphics^ * graphics) {
-	for (int i = 0; i < mainBoard.getSizeM(); i++) {
-		for (int j = 0; j < mainBoard.getSizeN(); j++) {
-			bool tmp = mainBoard.getState(i, j);
-			if (tmp)
-				graphics->FillRectangle(brush, j * 10 + 1, i * 10 + 1, 10 - 1, 10 - 1);
-		}
-	}
-}*/
+
+private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+		
+		this->button5->Enabled = false;
+		this->numericUpDown1->Enabled = true;
+		this->numericUpDown2->Enabled = true;
+}
+private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+	mainBoard.setSizeMAndN((int)this->numericUpDown1->Value, (int)this->numericUpDown2->Value);
+	/*MessageBox::Show(mainBoard.getSizeM().ToString());
+	MessageBox::Show(mainBoard.getSizeN().ToString());*/
+	manualMode = true;
+	this->button6->Enabled = false;
+	this->button2->Enabled = true;
+	this->numericUpDown1->Enabled = false;
+	this->numericUpDown2->Enabled = false;
+}
 };
 }

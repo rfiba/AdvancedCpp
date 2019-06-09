@@ -57,6 +57,14 @@ void board::setSizeN(int value)
 	sizeN = value;
 }
 
+void board::setSizeMAndN(int valueM, int valueN)
+{
+	sizeM = valueM;
+	sizeN = valueN;
+	vector<vector<cell>> p1(sizeM, vector<cell>(sizeN));
+	mainBoard = p1;
+}
+
 void board::nextStep()
 {
 	copyOfMainBoard = mainBoard;
@@ -92,6 +100,16 @@ void board::nextStep()
 			mainBoard[i][j] = copyOfMainBoard[i][j];
 		}
 	}
+}
+
+void board::birthBasedOnCordinates(int x, int y, int cellSize)
+{
+	mainBoard[y / cellSize][x / cellSize].birth();
+}
+
+void board::killBasedOnCordinates(int x, int y, int cellSize)
+{
+	mainBoard[y / cellSize][x / cellSize].kill();
 }
 
 void board::setState(int i, int j, bool stateToSet)
