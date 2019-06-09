@@ -1,6 +1,7 @@
 #pragma once
 #include "cell.h"
 #include "rle.h"
+#include<omp.h>
 #include <vector>
 using namespace std;
 class board

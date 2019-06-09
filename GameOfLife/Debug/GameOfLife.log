@@ -1,8 +1,4 @@
-﻿  board.cpp
-board.cpp(6): warning C4018: '<': signed/unsigned mismatch
-board.cpp(7): warning C4018: '<': signed/unsigned mismatch
-board.cpp(64): warning C4018: '<': signed/unsigned mismatch
-board.cpp(65): warning C4018: '<': signed/unsigned mismatch
+﻿  MainWindow.cpp
   board.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Debug\GameOfLife.exe
   GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Debug\GameOfLife.pdb (Partial PDB)

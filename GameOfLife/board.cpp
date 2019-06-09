@@ -61,8 +61,9 @@ void board::nextStep()
 {
 	copyOfMainBoard = mainBoard;
 	
-	for (int i = 0; i < copyOfMainBoard.size(); i++) {
-		for (int j = 0; j < copyOfMainBoard[i].size(); j++) {
+	//#pragma omp parallel for
+	for (int i = 0; i < sizeM; i++) {
+		for (int j = 0; j < sizeN; j++) {
 
 			int alives = 0;
 			bool flag1 = 0, flag2 = 0;
