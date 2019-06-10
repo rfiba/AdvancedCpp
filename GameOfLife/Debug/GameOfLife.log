@@ -1,4 +1,5 @@
 ﻿  MainWindow.cpp
+d:\documents\visual studio 2015\projects\advancedcpp\gameoflife\MainWindow.h(361): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
   board.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Debug\GameOfLife.exe
   GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Debug\GameOfLife.pdb (Partial PDB)

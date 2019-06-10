@@ -2,6 +2,7 @@
 #include "board.h"
 #include <string> 
 #include<windows.h>
+#include <chrono>
 
 namespace GameOfLife {
 
@@ -11,6 +12,8 @@ namespace GameOfLife {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace std;
+	using namespace std::chrono;
 
 	/// <summary>
 	/// Summary for MainWindow
@@ -24,7 +27,7 @@ namespace GameOfLife {
 			InitializeComponent();
 			timer = gcnew Timer();
 			timer->Tick += gcnew System::EventHandler(this, &MainWindow::onTimedEvent);
-			timer->Interval = 700;
+			timer->Interval = 1000/fps;
 			//timer->Start();
 			this->brush = gcnew SolidBrush(System::Drawing::Color::Blue);
 			this->image = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
@@ -71,7 +74,13 @@ namespace GameOfLife {
 			 static Timer^ timer;
 	private: System::Windows::Forms::Button^  button6;
 			 bool manualMode = false;
-			 
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown3;
+	private: System::Windows::Forms::Button^  button7;
+			 int fps = 30;
+			 int interval = 1000/fps;
 			 
 
 #pragma region Windows Form Designer generated code
@@ -93,9 +102,15 @@ namespace GameOfLife {
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown3 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->button7 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pictureBox1
@@ -166,9 +181,9 @@ namespace GameOfLife {
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(575, 18);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(35, 13);
+			this->label2->Size = System::Drawing::Size(10, 13);
 			this->label2->TabIndex = 6;
-			this->label2->Text = L"label2";
+			this->label2->Text = L"-";
 			// 
 			// listBox1
 			// 
@@ -192,19 +207,19 @@ namespace GameOfLife {
 			// 
 			// numericUpDown1
 			// 
+			this->numericUpDown1->Enabled = false;
 			this->numericUpDown1->Location = System::Drawing::Point(238, 45);
 			this->numericUpDown1->Name = L"numericUpDown1";
 			this->numericUpDown1->Size = System::Drawing::Size(120, 20);
 			this->numericUpDown1->TabIndex = 9;
-			this->numericUpDown1->Enabled = false;
 			// 
 			// numericUpDown2
 			// 
+			this->numericUpDown2->Enabled = false;
 			this->numericUpDown2->Location = System::Drawing::Point(364, 45);
 			this->numericUpDown2->Name = L"numericUpDown2";
 			this->numericUpDown2->Size = System::Drawing::Size(120, 20);
 			this->numericUpDown2->TabIndex = 10;
-			this->numericUpDown2->Enabled = false;
 			// 
 			// button6
 			// 
@@ -216,11 +231,64 @@ namespace GameOfLife {
 			this->button6->UseVisualStyleBackColor = true;
 			this->button6->Click += gcnew System::EventHandler(this, &MainWindow::button6_Click);
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(629, 18);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(50, 13);
+			this->label3->TabIndex = 12;
+			this->label3->Text = L"Max FPS";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(685, 18);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(10, 13);
+			this->label4->TabIndex = 13;
+			this->label4->Text = L"-";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(629, 47);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(27, 13);
+			this->label5->TabIndex = 14;
+			this->label5->Text = L"FPS";
+			// 
+			// numericUpDown3
+			// 
+			this->numericUpDown3->Enabled = false;
+			this->numericUpDown3->Location = System::Drawing::Point(697, 43);
+			this->numericUpDown3->Name = L"numericUpDown3";
+			this->numericUpDown3->Size = System::Drawing::Size(120, 20);
+			this->numericUpDown3->TabIndex = 15;
+			this->numericUpDown3->Maximum = fps;
+			this->numericUpDown3->Minimum = 1;
+			// 
+			// button7
+			// 
+			this->button7->Location = System::Drawing::Point(832, 42);
+			this->button7->Name = L"button7";
+			this->button7->Size = System::Drawing::Size(75, 23);
+			this->button7->TabIndex = 16;
+			this->button7->Text = L"set FPS";
+			this->button7->UseVisualStyleBackColor = true;
+			this->button7->Click += gcnew System::EventHandler(this, &MainWindow::button7_Click);
+			this->button7->Enabled = false;
+			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(980, 578);
+			this->Controls->Add(this->button7);
+			this->Controls->Add(this->numericUpDown3);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->numericUpDown2);
 			this->Controls->Add(this->numericUpDown1);
@@ -238,6 +306,7 @@ namespace GameOfLife {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown3))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -271,6 +340,8 @@ namespace GameOfLife {
 	}
 
 	private: System::Void onTimedEvent(System::Object^  sender, System::EventArgs^  e) {
+		auto begin = system_clock::now();
+		
 		mainBoard.nextStep();
 		graphics->Clear(System::Drawing::Color::White);
 		MEMORYSTATUSEX statex;
@@ -285,6 +356,11 @@ namespace GameOfLife {
 			}
 		}
 		pictureBox1->Image = image;
+		system_clock::time_point end = system_clock::now();
+		auto tmp = duration_cast<milliseconds>(end - begin).count();
+		interval = 1000 / tmp;
+		label4->Text = interval.ToString();
+		this->numericUpDown3->Maximum = interval;
 	}
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	}
@@ -316,6 +392,8 @@ namespace GameOfLife {
 		this->button3->Enabled = true;
 		this->button2->Enabled = false;
 		this->button4->Enabled = false;
+		this->button7->Enabled = false;
+		this->numericUpDown3->Enabled = false;
 		timer->Start();
 	}
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -323,6 +401,8 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 	this->button3->Enabled = false;
 	this->button2->Enabled = true;
 	this->button4->Enabled = true;
+	this->button7->Enabled = true;
+	this->numericUpDown3->Enabled = true;
 }
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
 	mainBoard.createFileFromBoard("board_result.rle");
@@ -344,6 +424,12 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 	this->button2->Enabled = true;
 	this->numericUpDown1->Enabled = false;
 	this->numericUpDown2->Enabled = false;
+}
+private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
+	fps = (int)this->numericUpDown3->Value;
+	interval = 1000 / fps;
+	timer->Interval = interval;
+	
 }
 };
 }
