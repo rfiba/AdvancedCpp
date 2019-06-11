@@ -1,3 +1,14 @@
 ﻿  MainWindow.cpp
+d:\documents\visual studio 2015\projects\advancedcpp\gameoflife\MainWindow.h(361): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+  board.cpp
+board.cpp(6): warning C4018: '<': signed/unsigned mismatch
+board.cpp(7): warning C4018: '<': signed/unsigned mismatch
+  rle.cpp
+rle.cpp(72): warning C4566: character represented by universal-character-name '\u0153' cannot be represented in the current code page (1250)
+rle.cpp(55): warning C4800: 'cell *': forcing value to bool 'true' or 'false' (performance warning)
+rle.cpp(74): warning C4800: 'cell *': forcing value to bool 'true' or 'false' (performance warning)
+rle.cpp(96): warning C4800: 'cell *': forcing value to bool 'true' or 'false' (performance warning)
+  Generating Code...
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
   GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Release\GameOfLife.exe
   GameOfLife.vcxproj -> D:\Documents\Visual Studio 2015\Projects\AdvancedCpp\GameOfLife\Release\GameOfLife.pdb (Full PDB)

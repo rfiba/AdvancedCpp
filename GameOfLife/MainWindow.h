@@ -80,7 +80,8 @@ namespace GameOfLife {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown3;
 	private: System::Windows::Forms::Button^  button7;
 			 int fps = 30;
-			 int interval = 1000/fps;
+	private: System::Windows::Forms::Button^  button8;
+			 int interval = 1000 / fps;
 			 
 
 #pragma region Windows Form Designer generated code
@@ -107,6 +108,7 @@ namespace GameOfLife {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown3 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->button8 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
@@ -262,14 +264,15 @@ namespace GameOfLife {
 			// 
 			this->numericUpDown3->Enabled = false;
 			this->numericUpDown3->Location = System::Drawing::Point(697, 43);
+			this->numericUpDown3->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown3->Name = L"numericUpDown3";
 			this->numericUpDown3->Size = System::Drawing::Size(120, 20);
 			this->numericUpDown3->TabIndex = 15;
-			this->numericUpDown3->Maximum = fps;
-			this->numericUpDown3->Minimum = 1;
+			this->numericUpDown3->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			// 
 			// button7
 			// 
+			this->button7->Enabled = false;
 			this->button7->Location = System::Drawing::Point(832, 42);
 			this->button7->Name = L"button7";
 			this->button7->Size = System::Drawing::Size(75, 23);
@@ -277,13 +280,24 @@ namespace GameOfLife {
 			this->button7->Text = L"set FPS";
 			this->button7->UseVisualStyleBackColor = true;
 			this->button7->Click += gcnew System::EventHandler(this, &MainWindow::button7_Click);
-			this->button7->Enabled = false;
+			// 
+			// button8
+			// 
+			this->button8->Location = System::Drawing::Point(794, 13);
+			this->button8->Name = L"button8";
+			this->button8->Size = System::Drawing::Size(113, 23);
+			this->button8->TabIndex = 17;
+			this->button8->Text = L"show previous";
+			this->button8->UseVisualStyleBackColor = true;
+			this->button8->Click += gcnew System::EventHandler(this, &MainWindow::button8_Click);
+			this->button8->Enabled = false;
 			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(980, 578);
+			this->Controls->Add(this->button8);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->numericUpDown3);
 			this->Controls->Add(this->label5);
@@ -374,6 +388,7 @@ namespace GameOfLife {
 				mainBoard.createBoardFromFile("glider.rle");
 			else if (this->listBox1->SelectedItem->ToString() == "Copperhead")
 				mainBoard.createBoardFromFile("copperhead.rle");
+			this->button2->Enabled = true;
 		}
 		else
 			return;
@@ -385,7 +400,7 @@ namespace GameOfLife {
 			}
 		}
 		pictureBox1->Image = image;
-		this->button2->Enabled = true;
+		
 		
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -394,6 +409,7 @@ namespace GameOfLife {
 		this->button4->Enabled = false;
 		this->button7->Enabled = false;
 		this->numericUpDown3->Enabled = false;
+		this->button8->Enabled = false;
 		timer->Start();
 	}
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -402,6 +418,7 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 	this->button2->Enabled = true;
 	this->button4->Enabled = true;
 	this->button7->Enabled = true;
+	this->button8->Enabled = true;
 	this->numericUpDown3->Enabled = true;
 }
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -430,6 +447,17 @@ private: System::Void button7_Click(System::Object^  sender, System::EventArgs^ 
 	interval = 1000 / fps;
 	timer->Interval = interval;
 	
+}
+private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
+	graphics->Clear(System::Drawing::Color::White);
+	for (int i = 0; i < mainBoard.getSizeM(); i++) {
+		for (int j = 0; j < mainBoard.getSizeN(); j++) {
+			bool tmp = mainBoard.getPreviousState(i, j);
+			if (tmp)
+				graphics->FillRectangle(brush, j * 10 + 1, i * 10 + 1, 10 - 1, 10 - 1);
+		}
+	}
+	pictureBox1->Image = image;
 }
 };
 }

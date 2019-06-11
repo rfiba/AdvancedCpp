@@ -47,6 +47,11 @@ bool board::getState(int i, int j)
 	return mainBoard[i][j].returnState();
 }
 
+bool board::getPreviousState(int i, int j)
+{
+	return copyOfMainBoard[i][j].returnState();
+}
+
 void board::setSizeM(int value)
 {
 	sizeM = value;
@@ -139,5 +144,5 @@ void board::createFileFromBoard(string fileName)
 
 shared_ptr<vector<vector<cell>>> board::returnBoard()
 {
-	return make_shared<vector<vector<cell>>>(mainBoard);
+	return make_shared<vector<vector<cell>>>(copyOfMainBoard);
 }

@@ -20,6 +20,7 @@ public:
 	int getSizeM();
 	int getSizeN();
 	bool getState(int i, int j);
+	bool getPreviousState(int i, int j);
 	void setSizeM(int value);
 	void setSizeN(int value);
 	void setSizeMAndN(int valueM, int valueN);
